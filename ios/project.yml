@@ -3,9 +3,10 @@ options:
   bundleIdPrefix: com.openclaw
   deploymentTarget:
     iOS: "16.0"
-    watchOS: "9.0"
+    watchOS: "26.2"
   xcodeVersion: "15.0"
   generateEmptyDirectories: true
+  createIntermediateGroups: true
 
 settings:
   base:
@@ -13,59 +14,59 @@ settings:
     MARKETING_VERSION: "0.1.0"
     CURRENT_PROJECT_VERSION: "1"
     DEVELOPMENT_TEAM: ""
-    CODE_SIGN_IDENTITY: ""
+    CODE_SIGN_IDENTITY: "-"
     CODE_SIGNING_REQUIRED: NO
-    CODE_SIGN_ENTITLEMENTS: ""
+    CODE_SIGNING_ALLOWED: NO
 
 targets:
-  Tamagotchi:
+  # ── iOS Companion App ──────────────────────────────────────────
+  Tamagotchi-iOS:
     type: application
     platform: iOS
     sources:
-      - path: Tamagotchi/Sources
+      - path: iOS/Tamagotchi/Sources
     resources:
-      - path: Tamagotchi/Resources
+      - path: iOS/Tamagotchi/Resources
     settings:
       base:
-        INFOPLIST_FILE: Tamagotchi/Resources/Info.plist
+        INFOPLIST_FILE: iOS/Tamagotchi/Resources/Info.plist
         PRODUCT_BUNDLE_IDENTIFIER: com.openclaw.tamagotchi
         TARGETED_DEVICE_FAMILY: "1,2"
         SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD: YES
+        GENERATE_INFOPLIST_FILE: NO
     dependencies:
-      - target: TamagotchiWatch
+      - target: Tamagotchi-Watch
         embed: true
+        codeSign: false
 
-  TamagotchiWatch:
+  # ── watchOS WatchKit App ────────────────────────────────────────
+  Tamagotchi-Watch:
     type: application
     platform: watchOS
     sources:
-      - path: Tamagotchi/Sources
+      - path: watch/Tamagotchi/Sources
     resources:
-      - path: Tamagotchi/Resources
+      - path: watch/Tamagotchi/Resources
     settings:
       base:
-        INFOPLIST_FILE: Tamagotchi/Resources/Info.plist
+        INFOPLIST_FILE: watch/Tamagotchi/Resources/Info.plist
         PRODUCT_BUNDLE_IDENTIFIER: com.openclaw.tamagotchi.watchkitapp
-        WATCHOS_DEPLOYMENT_TARGET: "9.0"
+        WATCHOS_DEPLOYMENT_TARGET: "26.2"
         SDKROOT: watchos
         TARGETED_DEVICE_FAMILY: 4
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         GENERATE_INFOPLIST_FILE: NO
-        INFOPLIST_KEY_WKCompanionAppBundleIdentifier: com.openclaw.tamagotchi
+        CODE_SIGN_ENTITLEMENTS: ""
+        LD_RUNPATH_SEARCH_PATHS: "$(inherited) @executable_path/Frameworks"
+        ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES: YES
 
 schemes:
-  Tamagotchi:
+  Tamagotchi-iOS:
     build:
       targets:
-        Tamagotchi: all
-        TamagotchiWatch: all
+        Tamagotchi-iOS: all
+        Tamagotchi-Watch: all
     run:
-      config: Debug
-    test:
-      config: Debug
-    profile:
-      config: Release
-    analyze:
       config: Debug
     archive:
       config: Release

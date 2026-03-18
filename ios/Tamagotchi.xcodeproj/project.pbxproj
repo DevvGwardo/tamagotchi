@@ -1,0 +1,455 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		148FAA4A632287D8A90105BD /* Tamagotchi-Watch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 92501ADC5AC80AF054995858 /* Tamagotchi-Watch.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		8ED823BDB1B4831625573C09 /* PetState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FF12B951E45469EB4FFAEB4 /* PetState.swift */; };
+		E56C5B35989D700BC0BB3690 /* Tamagotchi_iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F4D58691F5DBE753715F7A /* Tamagotchi_iOSApp.swift */; };
+		F53CCACA4DF8822CEC358297 /* TamagotchiWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC1A95AD7A66B06691DBEFB /* TamagotchiWatchApp.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		7A8B887D4A436F8740C65F8C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2FF888A9B55390E2F1995C2A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2FFAF9005628F2D8A7AF03D4;
+			remoteInfo = "Tamagotchi-Watch";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		CDC315F726530F2D313FD424 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				148FAA4A632287D8A90105BD /* Tamagotchi-Watch.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		2DC1A95AD7A66B06691DBEFB /* TamagotchiWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TamagotchiWatchApp.swift; sourceTree = "<group>"; };
+		40F4D58691F5DBE753715F7A /* Tamagotchi_iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tamagotchi_iOSApp.swift; sourceTree = "<group>"; };
+		6FF12B951E45469EB4FFAEB4 /* PetState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetState.swift; sourceTree = "<group>"; };
+		7BEC9088488B91A8D146A8F3 /* Tamagotchi-iOS.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = "Tamagotchi-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		92501ADC5AC80AF054995858 /* Tamagotchi-Watch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Tamagotchi-Watch.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		3E5D82A3013D85D67CF0D62C = {
+			isa = PBXGroup;
+			children = (
+				A7656E6350554D760C5DB9FD /* iOS */,
+				BCF6063FCA801BCB5B7275A3 /* watch */,
+				448613B8EC3E0A936EC401A9 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		448613B8EC3E0A936EC401A9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7BEC9088488B91A8D146A8F3 /* Tamagotchi-iOS.app */,
+				92501ADC5AC80AF054995858 /* Tamagotchi-Watch.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		688184100225A12CAB661498 /* Tamagotchi */ = {
+			isa = PBXGroup;
+			children = (
+				77A63DE2C9A8BC5DAC139CB6 /* Sources */,
+			);
+			path = Tamagotchi;
+			sourceTree = "<group>";
+		};
+		77A63DE2C9A8BC5DAC139CB6 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				2DC1A95AD7A66B06691DBEFB /* TamagotchiWatchApp.swift */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		A5F2B4059C826964D62F4A17 /* Tamagotchi */ = {
+			isa = PBXGroup;
+			children = (
+				ADAA69D4448A2F165406FFA9 /* Sources */,
+			);
+			path = Tamagotchi;
+			sourceTree = "<group>";
+		};
+		A7656E6350554D760C5DB9FD /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				A5F2B4059C826964D62F4A17 /* Tamagotchi */,
+			);
+			path = iOS;
+			sourceTree = "<group>";
+		};
+		ADAA69D4448A2F165406FFA9 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				6FF12B951E45469EB4FFAEB4 /* PetState.swift */,
+				40F4D58691F5DBE753715F7A /* Tamagotchi_iOSApp.swift */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		BCF6063FCA801BCB5B7275A3 /* watch */ = {
+			isa = PBXGroup;
+			children = (
+				688184100225A12CAB661498 /* Tamagotchi */,
+			);
+			path = watch;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		2FFAF9005628F2D8A7AF03D4 /* Tamagotchi-Watch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 983532C1ED01C4F872FB2007 /* Build configuration list for PBXNativeTarget "Tamagotchi-Watch" */;
+			buildPhases = (
+				B8F875BE39B752A9C7575AAA /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Tamagotchi-Watch";
+			packageProductDependencies = (
+			);
+			productName = "Tamagotchi-Watch";
+			productReference = 92501ADC5AC80AF054995858 /* Tamagotchi-Watch.app */;
+			productType = "com.apple.product-type.application";
+		};
+		5F4C662BFB2CC4C75A539D6A /* Tamagotchi-iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5A55E47BD331719B0B4D70F7 /* Build configuration list for PBXNativeTarget "Tamagotchi-iOS" */;
+			buildPhases = (
+				141C59C6D682BCBE01259898 /* Sources */,
+				CDC315F726530F2D313FD424 /* Embed Watch Content */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				81B45EFBD898937278C1D81F /* PBXTargetDependency */,
+			);
+			name = "Tamagotchi-iOS";
+			packageProductDependencies = (
+			);
+			productName = "Tamagotchi-iOS";
+			productReference = 7BEC9088488B91A8D146A8F3 /* Tamagotchi-iOS.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		2FF888A9B55390E2F1995C2A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					2FFAF9005628F2D8A7AF03D4 = {
+						DevelopmentTeam = "";
+					};
+					5F4C662BFB2CC4C75A539D6A = {
+						DevelopmentTeam = "";
+					};
+				};
+			};
+			buildConfigurationList = 766E2F07EE7DF52581B63324 /* Build configuration list for PBXProject "Tamagotchi" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 3E5D82A3013D85D67CF0D62C;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				2FFAF9005628F2D8A7AF03D4 /* Tamagotchi-Watch */,
+				5F4C662BFB2CC4C75A539D6A /* Tamagotchi-iOS */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		141C59C6D682BCBE01259898 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8ED823BDB1B4831625573C09 /* PetState.swift in Sources */,
+				E56C5B35989D700BC0BB3690 /* Tamagotchi_iOSApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B8F875BE39B752A9C7575AAA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F53CCACA4DF8822CEC358297 /* TamagotchiWatchApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		81B45EFBD898937278C1D81F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2FFAF9005628F2D8A7AF03D4 /* Tamagotchi-Watch */;
+			targetProxy = 7A8B887D4A436F8740C65F8C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		0226069028EA890317751575 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MARKETING_VERSION = 0.1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.9;
+				WATCHOS_DEPLOYMENT_TARGET = 26.2;
+			};
+			name = Debug;
+		};
+		98229F790022151B73BC7A4D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = watch/Tamagotchi/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.openclaw.tamagotchi.watchkitapp;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 26.2;
+			};
+			name = Debug;
+		};
+		C2DE26BC0CB631B1581F49C3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = watch/Tamagotchi/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.openclaw.tamagotchi.watchkitapp;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 26.2;
+			};
+			name = Release;
+		};
+		C7C2F101E2B1C82ADBE1B7F6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = iOS/Tamagotchi/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.openclaw.tamagotchi;
+				SDKROOT = iphoneos;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		CEEEA57AE418D9CE650B4D24 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MARKETING_VERSION = 0.1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.9;
+				WATCHOS_DEPLOYMENT_TARGET = 26.2;
+			};
+			name = Release;
+		};
+		FD0CD7634812695F3AF0BE21 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = iOS/Tamagotchi/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.openclaw.tamagotchi;
+				SDKROOT = iphoneos;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		5A55E47BD331719B0B4D70F7 /* Build configuration list for PBXNativeTarget "Tamagotchi-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C7C2F101E2B1C82ADBE1B7F6 /* Debug */,
+				FD0CD7634812695F3AF0BE21 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		766E2F07EE7DF52581B63324 /* Build configuration list for PBXProject "Tamagotchi" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0226069028EA890317751575 /* Debug */,
+				CEEEA57AE418D9CE650B4D24 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		983532C1ED01C4F872FB2007 /* Build configuration list for PBXNativeTarget "Tamagotchi-Watch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				98229F790022151B73BC7A4D /* Debug */,
+				C2DE26BC0CB631B1581F49C3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 2FF888A9B55390E2F1995C2A /* Project object */;
+}

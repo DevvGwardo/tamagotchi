@@ -1,0 +1,21 @@
+# Build artifacts
+ios/build/
+ios/Tamagotchi/
+DerivedData/
+*.xcuserstate/
+*.xcworkspace/xcuserdata/
+
+# macOS
+.DS_Store
+
+# Logs
+*.log
+
+# npm
+web/node_modules/
+web/dist/
+web/.vite/
+
+# Environment
+.env
+.env.local
