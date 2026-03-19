@@ -7,6 +7,8 @@ import {
   type SyncResult,
 } from './openclaw-bridge';
 import type { PetState, HistoryEntry, ActionDef, Mood } from './types';
+import { StatsChart } from './components/StatsChart';
+import { AchievementsPanel } from './components/AchievementsPanel';
 
 // ── Constants ────────────────────────────────────────────────────────────────
 
@@ -219,6 +221,7 @@ export default function App() {
   const [isDead, setIsDead] = useState(false);
   const [editingName, setEditingName] = useState(false);
   const [nameInput, setNameInput] = useState('');
+  const [activeTab, setActiveTab] = useState<'main' | 'stats' | 'achievements'>('main');
   const nameInputRef = useRef<HTMLInputElement>(null);
 
   // OpenClaw sync state
@@ -373,6 +376,28 @@ export default function App() {
   const isCritical = !isDead && (pet.hunger < 20 || pet.health < 20);
   const critFrameClass = isCritical ? 'critical-frame' : '';
 
+  // Render tab content
+  const renderTabContent = () => {
+    switch (activeTab) {
+      case 'stats':
+        return (
+          <div className="tab-panel">
+            <button className="back-btn" onClick={() => setActiveTab('main')}>← Back</button>
+            <StatsChart pet={pet} history={history} />
+          </div>
+        );
+      case 'achievements':
+        return (
+          <div className="tab-panel">
+            <button className="back-btn" onClick={() => setActiveTab('main')}>← Back</button>
+            <AchievementsPanel pet={pet} deaths={deaths} />
+          </div>
+        );
+      default:
+        return null;
+    }
+  };
+
   return (
     <div className="app">
       <div className={`device ${critFrameClass}`}>
@@ -399,10 +424,14 @@ export default function App() {
                 {syncStatus.source === 'file' ? 'Synced' : 'Local'}
               </span>
             )}
-            <span className="device-badge">v0.2</span>
+            <span className="device-badge">v0.3</span>
           </div>
         </div>
 
+        {activeTab !== 'main' ? (
+          renderTabContent()
+        ) : (
+          <>
         {/* Character */}
         <div className={`character-wrap ${bounce ? 'bounce' : ''}`}>
           {isDead && (
