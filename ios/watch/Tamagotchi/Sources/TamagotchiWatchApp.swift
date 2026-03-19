@@ -62,10 +62,13 @@ struct WatchContentView: View {
                 }
             }
 
-            // Row 2: Pet character
-            WatchPetCharacter(mood: pet.mood, animating: animating)
-                .onTapGesture { animating = true; WKInterfaceDevice.current().play(.click)
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { animating = false } }
+            // Row 2: Pet character (sprite-based)
+            SmartSpriteView(mood: pet.mood, triggerBounce: animating, size: 44)
+                .onTapGesture { 
+                    animating = true
+                    WKInterfaceDevice.current().play(.click)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { animating = false }
+                }
 
             // Row 3: Critical warning
             if isCritical {
@@ -396,142 +399,6 @@ struct HealthBar: View {
     }
 }
 
-// ── Pixel Art Cat (Canvas-based) ───────────────────────────────────────────
-
-struct WatchPetCharacter: View {
-    let mood: String
-    let animating: Bool
-    
-    // Pixel art data: [col, row, color] for an 8x10 grid
-    private func getPixels() -> [(Int, Int, Color)] {
-        var pixels: [(Int, Int, Color)] = []
-        
-        // Base colors
-        let fur = Color(red: 0.78, green: 0.64, blue: 0.08)      // Golden yellow
-        let furDark = Color(red: 0.63, green: 0.51, blue: 0.05)  // Darker gold
-        let furLight = Color(red: 0.91, green: 0.78, blue: 0.20) // Light gold
-        let eye = Color.black
-        let nose = Color(red: 0.55, green: 0.27, blue: 0.07)     // Brown
-        
-        // Body (rows 5-9)
-        for row in 5...9 {
-            for col in 2...5 {
-                pixels.append((col, row, (row + col) % 2 == 0 ? fur : furDark))
-            }
-        }
-        // Ears (rows 2-4)
-        pixels.append((1, 4, furDark))
-        pixels.append((2, 4, fur))
-        pixels.append((5, 4, fur))
-        pixels.append((6, 4, furDark))
-        pixels.append((1, 3, fur))
-        pixels.append((6, 3, fur))
-        pixels.append((1, 2, furLight))
-        pixels.append((6, 2, furLight))
-        
-        // Head (rows 3-5)
-        for row in 3...5 {
-            for col in 2...5 {
-                pixels.append((col, row, (row == 3) ? furLight : fur))
-            }
-        }
-        
-        // Eyes based on mood
-        let (leftEye, rightEye, eyeRow) = eyePositions()
-        pixels.append((leftEye, eyeRow, eye))
-        pixels.append((rightEye, eyeRow, eye))
-        
-        // Eye shine (unless dead/sleeping)
-        if mood != "sleeping" && mood != "dead" {
-            pixels.append((leftEye + 1, eyeRow - 1, Color.white.opacity(0.7)))
-            pixels.append((rightEye + 1, eyeRow - 1, Color.white.opacity(0.7)))
-        }
-        
-        // Mouth
-        let mouthColor = mood == "sad" || mood == "miserable" || mood == "dead" 
-            ? Color(red: 0.35, green: 0.19, blue: 0.13)
-            : nose
-        pixels.append((3, 5, mouthColor))
-        pixels.append((4, 5, mouthColor))
-        
-        return pixels
-    }
-    
-    private func eyePositions() -> (Int, Int, Int) {
-        switch mood {
-        case "sleeping":
-            return (2, 5, 4)  // Lower, closed
-        case "eating":
-            return (2, 5, 3)  // Wide open, higher
-        case "dead":
-            return (2, 5, 4)  // X eyes drawn separately
-        case "sad", "miserable":
-            return (2, 5, 4)  // Lower
-        case "happy", "ecstatic":
-            return (2, 5, 3)  // Normal
-        default:
-            return (2, 5, 4)  // content, neutral
-        }
-    }
-    
-    private var isDead: Bool { mood == "dead" }
-    private var isSad: Bool { mood == "sad" || mood == "miserable" }
-    private var isSleeping: Bool { mood == "sleeping" }
-    
-    var body: some View {
-        Canvas { context, size in
-            let pixelSize = size.width / 8
-            let pixels = getPixels()
-            
-            // Apply grayscale filter for dead state
-            if isDead {
-                context.addFilter(.colorMultiply(Color.gray.opacity(0.5)))
-            } else if isSad {
-                context.addFilter(.saturation(0.6))
-            }
-            
-            // Draw pixels
-            for (col, row, color) in pixels {
-                let rect = CGRect(
-                    x: CGFloat(col) * pixelSize,
-                    y: CGFloat(row) * pixelSize,
-                    width: pixelSize * 0.95,
-                    height: pixelSize * 0.95
-                )
-                context.fill(Path(rect), with: .color(color))
-            }
-            
-            // Draw X eyes for dead state
-            if isDead {
-                let p = pixelSize
-                drawX(context: context, at: CGPoint(x: 2.2 * p, y: 3.6 * p), size: p * 0.6)
-                drawX(context: context, at: CGPoint(x: 4.8 * p, y: 3.6 * p), size: p * 0.6)
-            }
-            
-            // Draw Z for sleeping
-            if isSleeping {
-                let p = pixelSize
-                context.draw(
-                    Text("Z").font(.system(size: p, weight: .bold)),
-                    at: CGPoint(x: 6.5 * p, y: 1.5 * p)
-                )
-            }
-        }
-        .frame(width: animating ? 44 : 38, height: animating ? 44 : 38)
-        .animation(.spring(response: 0.3), value: animating)
-        .id(mood) // Force redraw on mood change
-    }
-    
-    private func drawX(context: GraphicsContext, at center: CGPoint, size: CGFloat) {
-        var path = Path()
-        path.move(to: CGPoint(x: center.x - size/2, y: center.y - size/2))
-        path.addLine(to: CGPoint(x: center.x + size/2, y: center.y + size/2))
-        path.move(to: CGPoint(x: center.x + size/2, y: center.y - size/2))
-        path.addLine(to: CGPoint(x: center.x - size/2, y: center.y + size/2))
-        context.stroke(path, with: .color(.black), lineWidth: size * 0.2)
-    }
-}
-
 // ── Death View ─────────────────────────────────────────────────────────────
 
 struct DeathView: View {
@@ -539,8 +406,8 @@ struct DeathView: View {
     let onRevive: () -> Void
     var body: some View {
         VStack(spacing: 6) {
-            // Dead pixel cat
-            WatchPetCharacter(mood: "dead", animating: false)
+            // Dead pixel cat (uses sprite or canvas fallback)
+            SmartSpriteView(mood: "dead", triggerBounce: false, size: 44)
             
             if deaths > 0 {
                 Text("☠ \(deaths) death\(deaths == 1 ? "" : "s")")
