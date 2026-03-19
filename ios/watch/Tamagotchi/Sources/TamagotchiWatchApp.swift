@@ -20,7 +20,7 @@ struct RootView: View {
         if endpoint.isEmpty || token.isEmpty {
             SetupView()
         } else {
-            AgentCompanionView()
+            PetCompanionView()
         }
     }
 }
@@ -61,198 +61,306 @@ struct SetupView: View {
     }
 }
 
-// MARK: - Agent Companion View Model
+// MARK: - Sync Indicator View
 
-@MainActor
-class AgentCompanionViewModel: ObservableObject {
-    @Published var agentState: AgentState = .idle
-    @Published var lastResponse: String?
-    @Published var messages: [ChatMessage] = []
-    @Published var errorMessage: String?
-
-    private let chatService = WatchChatService.shared
-
-    func sendMessage(_ text: String) async {
-        let userMessage = ChatMessage(role: "user", content: text)
-        messages.append(userMessage)
-        errorMessage = nil
-
-        // Sending state — triggers bounce + click
-        agentState = .sending
-        agentState.playHaptic()
-
-        // Brief delay for bounce animation, then thinking
-        try? await Task.sleep(nanoseconds: 400_000_000)
-        agentState = .thinking
-
-        do {
-            let response = try await chatService.sendMessage(text, history: messages)
-            let assistantMessage = ChatMessage(role: "assistant", content: response)
-            messages.append(assistantMessage)
-            lastResponse = response
-
-            // Responding state — happy animation + hearts + success haptic
-            agentState = .responding
-            agentState.playHaptic()
-
-            // Return to idle after 3 seconds
-            try? await Task.sleep(nanoseconds: 3_000_000_000)
-            agentState = .idle
-        } catch {
-            errorMessage = error.localizedDescription
-            agentState = .error
-            agentState.playHaptic()
+struct SyncIndicatorView: View {
+    @ObservedObject var syncManager: StateSyncManager
+    
+    var body: some View {
+        HStack(spacing: 4) {
+            // Status dot
+            Circle()
+                .fill(statusColor)
+                .frame(width: 6, height: 6)
+            
+            // Status text
+            Text(syncManager.syncStatus.displayText)
+                .font(.system(size: 10))
+                .foregroundColor(.gray)
+            
+            // Refresh button
+            Button {
+                syncManager.forceRefresh()
+            } label: {
+                Image(systemName: "arrow.clockwise")
+                    .font(.system(size: 10))
+                    .foregroundColor(.blue)
+            }
+            .buttonStyle(.plain)
         }
     }
-
-    func retry() async {
-        guard let lastUserMessage = messages.last(where: { $0.role == "user" }) else { return }
-        // Remove the failed user message to re-send
-        if let lastIndex = messages.lastIndex(where: { $0.id == lastUserMessage.id }) {
-            messages.remove(at: lastIndex)
+    
+    private var statusColor: Color {
+        switch syncManager.syncStatus {
+        case .syncing:
+            return .yellow
+        case .synced:
+            return .green
+        case .offline:
+            return .gray
+        case .error:
+            return .red
         }
-        await sendMessage(lastUserMessage.content)
-    }
-
-    func disconnect() {
-        UserDefaults.standard.removeObject(forKey: "agent_endpoint")
-        UserDefaults.standard.removeObject(forKey: "agent_token")
     }
 }
 
-// MARK: - Agent Companion View
+// MARK: - Stat Bar View
 
-struct AgentCompanionView: View {
-    @StateObject private var viewModel = AgentCompanionViewModel()
-    @State private var showingInput = false
-    @State private var inputText = ""
+struct StatBarView: View {
+    let label: String
+    let value: Int
+    let color: Color
+    let icon: String
+    
+    var body: some View {
+        HStack(spacing: 4) {
+            Image(systemName: icon)
+                .font(.system(size: 10))
+                .foregroundColor(color)
+                .frame(width: 16)
+            
+            Text(label)
+                .font(.system(size: 11))
+                .foregroundColor(.white)
+                .frame(width: 50, alignment: .leading)
+            
+            GeometryReader { geometry in
+                ZStack(alignment: .leading) {
+                    // Background
+                    RoundedRectangle(cornerRadius: 3)
+                        .fill(Color.gray.opacity(0.3))
+                        .frame(height: 8)
+                    
+                    // Fill
+                    RoundedRectangle(cornerRadius: 3)
+                        .fill(barColor)
+                        .frame(width: max(0, geometry.size.width * CGFloat(value) / 100), height: 8)
+                        .animation(.easeInOut(duration: 0.3), value: value)
+                }
+            }
+            .frame(height: 8)
+            
+            Text("\(value)")
+                .font(.system(size: 10, weight: .medium))
+                .foregroundColor(color)
+                .frame(width: 22, alignment: .trailing)
+        }
+    }
+    
+    private var barColor: Color {
+        if value > 70 { return color }
+        if value > 30 { return .orange }
+        return .red
+    }
+}
+
+// MARK: - Action Button
+
+struct ActionButton: View {
+    let title: String
+    let icon: String
+    let color: Color
+    let action: () -> Void
+    let disabled: Bool
+    
+    var body: some View {
+        Button {
+            action()
+        } label: {
+            VStack(spacing: 2) {
+                Image(systemName: icon)
+                    .font(.system(size: 16))
+                Text(title)
+                    .font(.system(size: 10, weight: .medium))
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 8)
+            .background(color.opacity(disabled ? 0.3 : 0.6))
+            .foregroundColor(disabled ? .gray : .white)
+            .cornerRadius(8)
+        }
+        .buttonStyle(.plain)
+        .disabled(disabled)
+    }
+}
+
+// MARK: - Pet Companion View
+
+struct PetCompanionView: View {
+    @StateObject private var syncManager = StateSyncManager.shared
     @State private var particleTrigger: ParticleTrigger?
-
-    private let spriteSize: CGFloat = 160
-
+    
+    private let spriteSize: CGFloat = 100
+    
     var body: some View {
         ScrollView {
             VStack(spacing: 8) {
+                // Sync indicator at top
+                SyncIndicatorView(syncManager: syncManager)
+                
+                // Pet name and XP
+                HStack {
+                    Text(syncManager.petState.name)
+                        .font(.headline)
+                    Spacer()
+                    Text("XP: \(syncManager.petState.xp)")
+                        .font(.caption)
+                        .foregroundColor(.yellow)
+                }
+                
                 // Animated sprite with particle overlay
                 ZStack {
                     SmartSpriteView(
-                        mood: viewModel.agentState.mood,
-                        triggerBounce: viewModel.agentState.shouldBounce,
+                        mood: syncManager.petState.displayMood,
+                        triggerBounce: particleTrigger != nil,
                         size: spriteSize
                     )
-
+                    
                     ParticleOverlay(trigger: particleTrigger)
                 }
                 .frame(height: spriteSize)
-
-                // Last response text
-                if let response = viewModel.lastResponse {
-                    Text(response)
-                        .font(.caption2)
+                
+                // Stats
+                VStack(spacing: 6) {
+                    StatBarView(
+                        label: "Hunger",
+                        value: syncManager.petState.hunger,
+                        color: .green,
+                        icon: "fork.knife"
+                    )
+                    StatBarView(
+                        label: "Happy",
+                        value: syncManager.petState.happiness,
+                        color: .pink,
+                        icon: "heart.fill"
+                    )
+                    StatBarView(
+                        label: "Energy",
+                        value: syncManager.petState.energy,
+                        color: .blue,
+                        icon: "bolt.fill"
+                    )
+                    StatBarView(
+                        label: "Health",
+                        value: syncManager.petState.health,
+                        color: .red,
+                        icon: "staroflife.fill"
+                    )
+                }
+                
+                // Action buttons
+                LazyVGrid(columns: [
+                    GridItem(.flexible()),
+                    GridItem(.flexible())
+                ], spacing: 8) {
+                    ActionButton(
+                        title: "Feed",
+                        icon: "cart.fill",
+                        color: .green,
+                        action: { 
+                            Task {
+                                await syncManager.feed()
+                                withAnimation {
+                                    particleTrigger = .eat
+                                }
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                                    particleTrigger = nil
+                                }
+                            }
+                        },
+                        disabled: syncManager.petState.isSleeping
+                    )
+                    
+                    ActionButton(
+                        title: "Play",
+                        icon: "gamecontroller.fill",
+                        color: .orange,
+                        action: { 
+                            Task {
+                                await syncManager.play()
+                                withAnimation {
+                                    particleTrigger = .pet
+                                }
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                                    particleTrigger = nil
+                                }
+                            }
+                        },
+                        disabled: syncManager.petState.isSleeping || syncManager.petState.energy < 20
+                    )
+                    
+                    ActionButton(
+                        title: "Pet",
+                        icon: "hand.tap.fill",
+                        color: .pink,
+                        action: { 
+                            Task {
+                                await syncManager.pet()
+                                withAnimation {
+                                    particleTrigger = .pet
+                                }
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                                    particleTrigger = nil
+                                }
+                            }
+                        },
+                        disabled: false
+                    )
+                    
+                    ActionButton(
+                        title: syncManager.petState.isSleeping ? "Wake" : "Sleep",
+                        icon: syncManager.petState.isSleeping ? "sun.max.fill" : "moon.fill",
+                        color: .purple,
+                        action: { 
+                            Task {
+                                await syncManager.toggleSleep()
+                                if syncManager.petState.isSleeping {
+                                    withAnimation {
+                                        particleTrigger = .sleep
+                                    }
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                                        particleTrigger = nil
+                                    }
+                                }
+                            }
+                        },
+                        disabled: false
+                    )
+                }
+                
+                // Mood indicator
+                HStack(spacing: 4) {
+                    Text("Mood:")
+                        .font(.caption)
+                        .foregroundColor(.gray)
+                    Text(syncManager.petState.mood.capitalized)
+                        .font(.caption)
                         .foregroundColor(.white)
-                        .lineLimit(4)
-                        .multilineTextAlignment(.center)
-                        .padding(.horizontal, 8)
                 }
-
-                // Status indicator
-                statusView
-
-                // Error + retry
-                if viewModel.agentState == .error {
-                    if let error = viewModel.errorMessage {
-                        Text(error)
-                            .font(.caption2)
-                            .foregroundColor(.red)
-                    }
-                    Button("Retry") {
-                        Task { await viewModel.retry() }
-                    }
-                    .font(.caption2)
-                    .foregroundColor(.orange)
-                }
-
-                // Ask button
-                if viewModel.agentState != .thinking && viewModel.agentState != .sending {
-                    Button {
-                        showingInput = true
-                    } label: {
-                        Label("Ask Clawbert", systemImage: "mic.fill")
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .tint(.blue)
-
-                    // Quick suggestions
-                    VStack(spacing: 4) {
-                        quickReplyButton("What's on my TODO?")
-                        quickReplyButton("Tell me something")
+                
+                // Achievements count
+                if !syncManager.petState.achievements.isEmpty {
+                    HStack(spacing: 4) {
+                        Text("🏆")
+                            .font(.caption)
+                        Text("\(syncManager.petState.achievements.count) achievements")
+                            .font(.caption)
+                            .foregroundColor(.yellow)
                     }
                 }
             }
             .padding(.vertical, 4)
+            .padding(.horizontal, 8)
         }
-        .sheet(isPresented: $showingInput) {
-            VStack {
-                TextField("Ask Clawbert...", text: $inputText)
-                Button("Send") {
-                    let text = inputText.trimmingCharacters(in: .whitespacesAndNewlines)
-                    guard !text.isEmpty else { return }
-                    inputText = ""
-                    showingInput = false
-                    Task { await viewModel.sendMessage(text) }
-                }
-                .buttonStyle(.borderedProminent)
-                .disabled(inputText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
-            }
-            .padding()
+        .onAppear {
+            // Initial load
+            syncManager.forceRefresh()
         }
-        .onChange(of: viewModel.agentState) { newState in
-            particleTrigger = newState.particleTrigger
-        }
-    }
-
-    private var statusView: some View {
-        HStack(spacing: 4) {
-            Circle()
-                .fill(statusColor)
-                .frame(width: 6, height: 6)
-            Text(statusText)
-                .font(.system(size: 10))
-                .foregroundColor(.gray)
-        }
-    }
-
-    private var statusColor: Color {
-        switch viewModel.agentState {
-        case .idle:       return .green
-        case .sending, .thinking: return .orange
-        case .responding: return .green
-        case .error:      return .red
-        }
-    }
-
-    private var statusText: String {
-        switch viewModel.agentState {
-        case .idle:       return "Connected"
-        case .sending:    return "Sending..."
-        case .thinking:   return "Thinking..."
-        case .responding: return "Responding"
-        case .error:      return "Error"
-        }
-    }
-
-    private func quickReplyButton(_ text: String) -> some View {
-        Button {
-            Task { await viewModel.sendMessage(text) }
-        } label: {
-            Text(text)
-                .font(.caption2)
-                .foregroundColor(.blue)
-        }
-        .buttonStyle(.plain)
     }
 }
 
+// MARK: - Preview
+
 #Preview {
-    AgentCompanionView()
+    PetCompanionView()
 }
