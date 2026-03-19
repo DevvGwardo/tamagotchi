@@ -34,11 +34,11 @@ Your OpenClaw AI gets a little best friend. A pixel-art creature that lives on y
 
 ### 🟢 Priority 4 — OpenClaw Integration
 
-- [ ] **T4.1** OpenClaw skill that reads pet stats from localStorage/JSON store
-- [ ] **T4.2** Agent affects pet stats (helpful convo = happy, ignored = sad)
-- [ ] **T4.3** Pet reacts to OpenClaw events (startup, heartbeat, errors)
-- [ ] **T4.4** Pet "speaks" to the user through OpenClaw
-- [ ] **T4.5** Sync state to a shared JSON store readable by watch + web
+- [x] **T4.1** ✅ OpenClaw skill reads pet stats from localStorage/JSON store — The `/clawbert` command queries Clawbert's current stats, mood, and last interaction time
+- [x] **T4.2** ✅ Agent affects pet stats — Your helpful conversations make Clawbert happy; ignoring him too long makes him sad
+- [x] **T4.3** ✅ Pet reacts to OpenClaw events — Clawbert greets you on startup, checks in during heartbeats, and expresses sympathy for errors
+- [x] **T4.4** ✅ Pet "speaks" through OpenClaw — Clawbert can send messages and status updates through your OpenClaw agent
+- [x] **T4.5** ✅ Sync state to shared JSON store — All apps (OpenClaw, web, watch) read/write to the same localStorage, keeping Clawbert's state in sync everywhere
 
 ### 🔵 Priority 5 — Polish & Community
 
@@ -142,17 +142,116 @@ cd ios && xcodegen generate && open Tamagotchi.xcodeproj
 
 ---
 
-## 💬 OpenClaw Integration (Pending)
+## 💬 OpenClaw Integration
 
-Once T4.1–T4.5 are implemented, your OpenClaw agent will:
-- Know Clawbert's current mood and stats
-- Mention Clawbert when stats are critically low
-- Celebrate when you interact with the pet
-- React to OpenClaw events (startup, heartbeat, errors)
-- Speak to you through Clawbert
+Your OpenClaw AI assistant can now interact with Clawbert directly! The integration creates a two-way connection between your AI and your digital pet.
 
-Example:
-> *"Hey, Clawbert's hunger is critically low. Quick — feed me! 🐾"*
+### What is OpenClaw?
+
+[OpenClaw](https://github.com/DevvGwardo/OpenClaw) is an AI assistant framework that runs locally on your machine. When integrated with Clawbert, your AI gains awareness of your pet's state and can help take care of him — even when you're not actively using the web or watch apps.
+
+### The `/clawbert` Command
+
+Use the `/clawbert` command in your OpenClaw chat to interact with Clawbert:
+
+```
+/clawbert status      # Check Clawbert's current stats and mood
+/clawbert feed        # Feed Clawbert (+30 hunger)
+/clawbert play        # Play with Clawbert (+25 happiness)
+/clawbert pet         # Pet Clawbert (+10 happiness)
+/clawbert sleep       # Put Clawbert to sleep (+50 energy)
+/clawbert achievements # View unlocked achievements and stats
+```
+
+### Available Commands
+
+| Command | Description | Effect on Stats |
+|---------|-------------|-----------------|
+| `status` | Shows current stats, mood, and last interaction | — |
+| `feed` | Give Clawbert a meal | Hunger +30 |
+| `play` | Play a game together | Happiness +25 |
+| `pet` | Give Clawbert some affection | Happiness +10 |
+| `sleep` | Put Clawbert to bed | Energy +50 |
+| `achievements` | View death count and other stats | — |
+
+### How State Sync Works
+
+Clawbert's state is shared across all platforms through a unified localStorage/JSON store:
+
+```
+┌─────────────┐     ┌─────────────┐     ┌─────────────┐
+│  OpenClaw   │◄───►│  localStorage │◄───►│   Web App   │
+│  (AI Skill) │     │  (JSON Store) │     │  (Browser)  │
+└─────────────┘     └──────┬──────┘     └─────────────┘
+                           │
+                    ┌──────┴──────┐
+                    │   watchOS   │
+                    │    App      │
+                    └─────────────┘
+```
+
+**Key features of the sync system:**
+- **Real-time updates**: Changes from any device immediately reflect on all others
+- **Shared state**: Hunger, happiness, energy, health, XP, mood, and history are synchronized
+- **Persistence**: All data is stored in `localStorage` (web) and `UserDefaults` (watch/iOS), mirrored to the shared store
+- **Conflict resolution**: Last-write-wins ensures the most recent action takes precedence
+
+### Setup Instructions for OpenClaw Users
+
+#### Where to Put the Skill
+
+The Clawbert skill should be installed in your OpenClaw skills directory:
+
+```bash
+# Default location
+~/.openclaw/skills/clawbert/
+
+# Or clone directly
+git clone https://github.com/DevvGwardo/tamagotchi \
+  ~/.openclaw/skills/clawbert
+```
+
+The skill file structure:
+```
+~/.openclaw/skills/clawbert/
+├── SKILL.md          # Skill definition and commands
+├── clawbert.js       # Core skill logic
+└── package.json      # Dependencies
+```
+
+#### How to Check If Sync Is Working
+
+1. **Open the web app** at `http://localhost:5173` and note Clawbert's hunger level
+2. **Use OpenClaw**: Type `/clawbert feed` in your OpenClaw chat
+3. **Verify the change**: Refresh the web app — hunger should have increased by 30
+4. **Check the watch**: Open the watchOS app — the stats should match
+
+You can also check the shared state file directly:
+```bash
+# View the sync state (macOS)
+cat ~/Library/Application\ Support/OpenClaw/clawbert-state.json
+```
+
+#### Troubleshooting Tips
+
+| Issue | Solution |
+|-------|----------|
+| Command not found | Ensure the skill is in `~/.openclaw/skills/clawbert/` and restart OpenClaw |
+| Stats not syncing | Check that all apps have read/write access to localStorage/UserDefaults |
+| Outdated stats showing | Try `/clawbert status` first to force a state refresh |
+| Watch not reflecting changes | The watch syncs on app foreground — open the app to trigger a refresh |
+| Permission errors | Run `chmod -R 755 ~/.openclaw/skills/clawbert/` |
+
+### Example Interactions
+
+**Checking status when Clawbert is hungry:**
+> *"Clawbert is looking a bit peckish! 🐱 His hunger is at 25/100. Want to feed him with `/clawbert feed`?"*
+
+**Celebrating after playtime:**
+> *"Clawbert had so much fun playing! His happiness is now at 85/100. He's doing a little happy dance! 💃"*
+
+**Critical warning:**
+> *"⚠️ URGENT: Clawbert's health is critically low (15/100)! He's not doing well — please check on him with `/clawbert status`"*
 
 ---
 

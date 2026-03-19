@@ -547,6 +547,20 @@ body {
   100% { opacity: 0; transform: translateY(-50%) scale(0.5); }
 }
 
+/* Sync indicator animation */
+.sync-indicator {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.sync-indicator.syncing {
+  animation: syncPulse 1s ease-in-out infinite;
+}
+@keyframes syncPulse {
+  0%,100% { opacity: 1; }
+  50%     { opacity: 0.4; }
+}
+
 /* Cat container for bounce animations */
 .cat-container {
   display: flex;

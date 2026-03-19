@@ -1,5 +1,7 @@
 # Sprite Asset Pipeline
 
+> For OpenClaw integration docs, see [OPENCLAW.md](./OPENCLAW.md).
+
 ## Overview
 
 The Tamagotchi watchOS app supports two rendering modes:

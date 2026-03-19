@@ -1,37 +1,14 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import './App.css';
+import {
+  syncToOpenClaw,
+  syncFromOpenClaw,
+  getSyncStatus,
+  type SyncResult,
+} from './openclaw-bridge';
+import type { PetState, HistoryEntry, ActionDef, Mood } from './types';
 
-// ── Types ────────────────────────────────────────────────────────────────────
-
-type Mood = 'ecstatic' | 'happy' | 'content' | 'neutral' | 'sad' | 'miserable' | 'sleeping' | 'eating';
-type ActionType = 'feed' | 'play' | 'sleep' | 'pet';
-
-interface PetState {
-  id: string;
-  name: string;
-  hunger: number;
-  happiness: number;
-  energy: number;
-  xp: number;
-  health: number;
-  mood: Mood;
-  skin: string;
-  lastUpdated: number;
-}
-
-interface HistoryEntry {
-  id: string;
-  emoji: string;
-  text: string;
-  time: number;
-}
-
-interface ActionDef {
-  type: ActionType;
-  label: string;
-  emoji: string;
-  delta: { hunger: number; happiness: number; energy: number; xp: number };
-}
+// ── Constants ────────────────────────────────────────────────────────────────
 
 // ── Constants ────────────────────────────────────────────────────────────────
 
@@ -244,10 +221,68 @@ export default function App() {
   const [nameInput, setNameInput] = useState('');
   const nameInputRef = useRef<HTMLInputElement>(null);
 
-  // Persist
+  // OpenClaw sync state
+  const [syncStatus, setSyncStatus] = useState<{ connected: boolean; source: 'file' | 'localStorage' | 'none' }>(
+    getSyncStatus()
+  );
+  const [isSyncing, setIsSyncing] = useState(false);
+
+  // Persist to localStorage
   useEffect(() => { localStorage.setItem('clawbert', JSON.stringify(pet)); }, [pet]);
   useEffect(() => { localStorage.setItem('clawbert_history', JSON.stringify(history)); }, [history]);
   useEffect(() => { localStorage.setItem('clawbert_deaths', String(deaths)); }, [deaths]);
+
+  // Sync TO OpenClaw whenever pet state changes (with debounce)
+  useEffect(() => {
+    if (isDead) return;
+    
+    const timeout = setTimeout(() => {
+      setIsSyncing(true);
+      syncToOpenClaw(pet, history, deaths)
+        .then((result: SyncResult) => {
+          setLastSyncTime(result.timestamp);
+          setSyncStatus(getSyncStatus());
+        })
+        .catch((err) => {
+          console.error('[App] Sync to OpenClaw failed:', err);
+        })
+        .finally(() => {
+          setIsSyncing(false);
+        });
+    }, 500); // 500ms debounce
+
+    return () => clearTimeout(timeout);
+  }, [pet.hunger, pet.happiness, pet.energy, pet.health, pet.xp, pet.mood, pet.name, isDead]);
+
+  // Poll FROM OpenClaw every 5 seconds to catch external updates
+  useEffect(() => {
+    if (isDead) return;
+
+    const interval = setInterval(() => {
+      syncFromOpenClaw()
+        .then(({ pet: remotePet, source }) => {
+          if (remotePet && source !== 'none') {
+            // Merge remote state - only update stats, preserve local UI state
+            setPet(prev => ({
+              ...prev,
+              hunger: remotePet.hunger,
+              happiness: remotePet.happiness,
+              energy: remotePet.energy,
+              health: remotePet.health,
+              xp: remotePet.xp,
+              mood: remotePet.mood,
+              lastUpdated: remotePet.lastUpdated,
+            }));
+            setLastSyncTime(Date.now());
+          }
+        })
+        .catch((err) => {
+          console.error('[App] Sync from OpenClaw failed:', err);
+        });
+    }, 5000); // Every 5 seconds
+
+    return () => clearInterval(interval);
+  }, [isDead]);
 
   // Stat decay timer — every 30s
   useEffect(() => {
@@ -345,7 +380,27 @@ export default function App() {
         {/* Header */}
         <div className="device-header">
           <span className="device-title">🐾 OpenClaw</span>
-          <span className="device-badge">v0.2</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            {syncStatus.connected && (
+              <span 
+                className={`sync-indicator ${isSyncing ? 'syncing' : ''}`}
+                title={`Synced via ${syncStatus.source}`}
+                style={{
+                  fontSize: 11,
+                  color: syncStatus.source === 'file' ? '#4ade80' : '#fbbf24',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 4,
+                  opacity: isSyncing ? 0.6 : 1,
+                  transition: 'opacity 0.2s',
+                }}
+              >
+                {syncStatus.source === 'file' ? '🔗' : '💾'} 
+                {syncStatus.source === 'file' ? 'Synced' : 'Local'}
+              </span>
+            )}
+            <span className="device-badge">v0.2</span>
+          </div>
         </div>
 
         {/* Character */}

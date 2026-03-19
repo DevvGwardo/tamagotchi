@@ -26,6 +26,21 @@ export interface PetState {
   lastUpdated: number;
   skin: string;        // e.g. 'default', 'cyber', 'seasonal-xmas'
   createdAt: number;
+
+  // OpenClaw integration fields
+  openclawSync: {
+    lastSyncTime: number;
+    syncVersion: number;
+  };
+  achievements: string[];           // Unlocked achievement IDs
+  unlockedSkins: string[];
+  unlockedAccessories: string[];
+  careStreak: {
+    current: number;
+    longest: number;
+    lastInteractionDate: string;    // ISO date string (YYYY-MM-DD)
+  };
+  totalPlayTime: number;            // Minutes
 }
 
 export type ActionType = 'feed' | 'play' | 'sleep' | 'pet';
