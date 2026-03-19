@@ -21,15 +21,17 @@ struct MinimalCharacterView: View {
     
     var body: some View {
         ZStack {
+            // Black background
+            Color.black.ignoresSafeArea()
+            
             if isDead {
                 // Dead state - static dead sprite
-                SmartSpriteView(mood: "dead", triggerBounce: false, size: 60)
+                SmartSpriteView(mood: "dead", triggerBounce: false, size: 80)
                     .onTapGesture { revive() }
             } else {
                 // Live character - full screen sprite
-                SmartSpriteView(mood: pet.mood, triggerBounce: false, size: 60)
+                SmartSpriteView(mood: pet.mood, triggerBounce: false, size: 80)
                     .onTapGesture { 
-                        // Cycle through moods on tap for demo
                         cycleMood()
                         WKInterfaceDevice.current().play(.click)
                     }
