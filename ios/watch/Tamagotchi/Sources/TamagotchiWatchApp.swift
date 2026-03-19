@@ -25,12 +25,12 @@ struct MinimalCharacterView: View {
             Color.black.ignoresSafeArea()
             
             if isDead {
-                // Dead state - static dead sprite
-                SmartSpriteView(mood: "dead", triggerBounce: false, size: 80)
+                // Dead state
+                DirectSpriteView(mood: "dead", size: 80)
                     .onTapGesture { revive() }
             } else {
-                // Live character - full screen sprite
-                SmartSpriteView(mood: pet.mood, triggerBounce: false, size: 80)
+                // Live character
+                DirectSpriteView(mood: pet.mood, size: 80)
                     .onTapGesture { 
                         cycleMood()
                         WKInterfaceDevice.current().play(.click)

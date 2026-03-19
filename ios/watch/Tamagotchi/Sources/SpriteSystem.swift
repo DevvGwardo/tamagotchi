@@ -306,7 +306,29 @@ struct SmartSpriteView: View {
     }
 }
 
-// MARK: - Usage in WatchContentView
+// MARK: - Direct Sprite View (simple, reliable)
 
-// Replace WatchPetCharacter with SmartSpriteView:
-// SmartSpriteView(mood: pet.mood, triggerBounce: animating)
+struct DirectSpriteView: View {
+    let mood: String
+    let size: CGFloat
+    
+    private var frameName: String {
+        // Just show first frame of each animation
+        switch mood {
+        case "dead": return "cat_dead_1"
+        case "sleeping": return "cat_sleeping_1"
+        case "eating": return "cat_eating_1"
+        case "sad": return "cat_sad_1"
+        case "happy": return "cat_happy_1"
+        default: return "cat_idle_1"
+        }
+    }
+    
+    var body: some View {
+        Image(frameName)
+            .resizable()
+            .interpolation(.none)
+            .antialiased(false)
+            .frame(width: size, height: size)
+    }
+}
