@@ -45,8 +45,11 @@ targets:
     platform: watchOS
     sources:
       - path: watch/Tamagotchi/Sources
-    resources:
-      - path: watch/Tamagotchi/Resources
+      - path: watch/Tamagotchi/Resources/Assets.xcassets
+        buildPhase: resources
+      - path: watch/Tamagotchi/Resources/Sprites
+        buildPhase: resources
+        type: folder
     settings:
       base:
         INFOPLIST_FILE: watch/Tamagotchi/Resources/Info.plist

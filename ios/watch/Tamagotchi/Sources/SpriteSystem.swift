@@ -59,6 +59,13 @@ struct SpriteAnimation {
         frameDuration: 0.08,
         loops: false
     )
+
+    static let thinking = SpriteAnimation(
+        name: "thinking",
+        frames: ["cat_eating_1", "cat_eating_2", "cat_eating_3", "cat_eating_4", "cat_eating_5"],
+        frameDuration: 0.2,
+        loops: true
+    )
 }
 
 // MARK: - Sprite Animator
@@ -170,6 +177,7 @@ struct AnimatedSpriteView: View {
         case "dead":      animation = .dead
         case "sleeping":  animation = .sleeping
         case "eating":    animation = .eating
+        case "thinking":  animation = .thinking
         case "sad", "miserable": animation = .sad
         case "happy", "ecstatic": animation = .happy
         default:          animation = .idle
