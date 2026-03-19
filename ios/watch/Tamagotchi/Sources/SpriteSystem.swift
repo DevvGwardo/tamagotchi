@@ -71,6 +71,7 @@ class SpriteAnimator: ObservableObject {
     private var frameIndex = 0
     private var timer: Timer?
     private var completion: (() -> Void)?
+    private let soundManager = SoundManager.shared
     
     func play(_ animation: SpriteAnimation, completion: (() -> Void)? = nil) {
         // Don't restart if already playing same animation
@@ -126,6 +127,9 @@ class SpriteAnimator: ObservableObject {
         guard let animation = currentAnimation,
               frameIndex < animation.frames.count else { return }
         currentFrame = animation.frames[frameIndex]
+        
+        // Play synced sound/haptic
+        soundManager.play(for: animation.name, frame: frameIndex)
     }
 }
 
