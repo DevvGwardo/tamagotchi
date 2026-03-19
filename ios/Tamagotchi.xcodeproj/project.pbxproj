@@ -11,6 +11,7 @@
 		148FAA4A632287D8A90105BD /* Tamagotchi-Watch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 92501ADC5AC80AF054995858 /* Tamagotchi-Watch.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		2FC6E600141F39B16081A8AE /* Sprites in Resources */ = {isa = PBXBuildFile; fileRef = 5E37592C86FB82B060A643EF /* Sprites */; };
 		4803B5CE2BE6936F319C6CD6 /* SpriteSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D2A0B891BBAC0F8484E068 /* SpriteSystem.swift */; };
+		500AB5BE608B650E82208436 /* PetState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E7CE1E9F749C82C1094885 /* PetState.swift */; };
 		5B30607EE721961A2EC1CAD8 /* WatchChatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 429B6FBA1DDD198782235C54 /* WatchChatService.swift */; };
 		791BF6433413897E74B2C360 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1A82CCEA041BB4AE91A4CF7A /* Assets.xcassets */; };
 		8ED823BDB1B4831625573C09 /* PetState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FF12B951E45469EB4FFAEB4 /* PetState.swift */; };
@@ -18,6 +19,7 @@
 		E56C5B35989D700BC0BB3690 /* Tamagotchi_iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F4D58691F5DBE753715F7A /* Tamagotchi_iOSApp.swift */; };
 		F53CCACA4DF8822CEC358297 /* TamagotchiWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DC1A95AD7A66B06691DBEFB /* TamagotchiWatchApp.swift */; };
 		FA76388FC88E8FFAE949605F /* ParticleSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721221EC3CA976FAD6FED9EF /* ParticleSystem.swift */; };
+		FD43BE7ED08EEA07D9493AA1 /* StateSyncManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90374E1828A084C3B2919BC /* StateSyncManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +59,8 @@
 		721221EC3CA976FAD6FED9EF /* ParticleSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticleSystem.swift; sourceTree = "<group>"; };
 		7BEC9088488B91A8D146A8F3 /* Tamagotchi-iOS.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = "Tamagotchi-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		92501ADC5AC80AF054995858 /* Tamagotchi-Watch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Tamagotchi-Watch.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B90374E1828A084C3B2919BC /* StateSyncManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateSyncManager.swift; sourceTree = "<group>"; };
+		F0E7CE1E9F749C82C1094885 /* PetState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetState.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -101,8 +105,10 @@
 			children = (
 				5EFAB13714D8FE0A53294E3D /* AgentState.swift */,
 				721221EC3CA976FAD6FED9EF /* ParticleSystem.swift */,
+				F0E7CE1E9F749C82C1094885 /* PetState.swift */,
 				443E52BDE4FCC8D8F67DE63F /* SoundManager.swift */,
 				14D2A0B891BBAC0F8484E068 /* SpriteSystem.swift */,
+				B90374E1828A084C3B2919BC /* StateSyncManager.swift */,
 				2DC1A95AD7A66B06691DBEFB /* TamagotchiWatchApp.swift */,
 				429B6FBA1DDD198782235C54 /* WatchChatService.swift */,
 			);
@@ -247,8 +253,10 @@
 			files = (
 				00530AC7513245FB77A93E4B /* AgentState.swift in Sources */,
 				FA76388FC88E8FFAE949605F /* ParticleSystem.swift in Sources */,
+				500AB5BE608B650E82208436 /* PetState.swift in Sources */,
 				A3A73C21C1FA30AD4CA8C67B /* SoundManager.swift in Sources */,
 				4803B5CE2BE6936F319C6CD6 /* SpriteSystem.swift in Sources */,
+				FD43BE7ED08EEA07D9493AA1 /* StateSyncManager.swift in Sources */,
 				F53CCACA4DF8822CEC358297 /* TamagotchiWatchApp.swift in Sources */,
 				5B30607EE721961A2EC1CAD8 /* WatchChatService.swift in Sources */,
 			);

@@ -26,8 +26,8 @@ class StateSyncManager: ObservableObject {
     // MARK: - Initialization
     
     init() {
-        // Path to the OpenClaw state file
-        let homeDirectory = FileManager.default.homeDirectoryForCurrentUser.path
+        // Path to the OpenClaw state file (use NSHomeDirectory for watchOS compatibility)
+        let homeDirectory = NSHomeDirectory()
         self.stateFilePath = "\(homeDirectory)/.openclaw/workspace/clawbert-state.json"
         
         // Load initial state
@@ -41,7 +41,8 @@ class StateSyncManager: ObservableObject {
     }
     
     deinit {
-        stopFileWatching()
+        // Cancel file monitoring on deinit
+        fileMonitor?.cancel()
         syncTimer?.invalidate()
     }
     
