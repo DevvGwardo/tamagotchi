@@ -306,14 +306,13 @@ struct SmartSpriteView: View {
     }
 }
 
-// MARK: - Direct Sprite View (simple, reliable)
+// MARK: - Direct Sprite View (load from bundle path)
 
 struct DirectSpriteView: View {
     let mood: String
     let size: CGFloat
     
     private var frameName: String {
-        // Just show first frame of each animation
         switch mood {
         case "dead": return "cat_dead_1"
         case "sleeping": return "cat_sleeping_1"
@@ -325,10 +324,20 @@ struct DirectSpriteView: View {
     }
     
     var body: some View {
-        Image(frameName)
-            .resizable()
-            .interpolation(.none)
-            .antialiased(false)
-            .frame(width: size, height: size)
+        // Try to load from bundle path directly
+        if let uiImage = loadImageFromBundle() {
+            Image(uiImage: uiImage)
+                .resizable()
+                .interpolation(.none)
+                .frame(width: size, height: size)
+        } else {
+            // Fallback to canvas if image not found
+            CanvasSpriteView(mood: mood, size: size)
+        }
+    }
+    
+    private func loadImageFromBundle() -> UIImage? {
+        // Try to load from asset catalog
+        return UIImage(named: frameName)
     }
 }
