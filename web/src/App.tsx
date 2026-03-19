@@ -484,6 +484,12 @@ export default function App() {
             <span className="xp-value">{Math.round(pet.xp)}</span>
             {deaths > 0 && <span className="death-counter">☠ {deaths}</span>}
           </div>
+          
+          {/* Care Streak */}
+          <div className="streak-row">
+            <span className="streak-label">🔥 Streak</span>
+            <span className="streak-value">{pet.perfectDayStreak} days</span>
+          </div>
         </div>
 
         {/* Actions */}
@@ -530,6 +536,30 @@ export default function App() {
             </div>
           ))}
         </div>
+
+        {/* Tab Navigation */}
+        <div className="tab-nav">
+          <button 
+            className={`tab-btn ${activeTab === 'main' ? 'active' : ''}`}
+            onClick={() => setActiveTab('main')}
+          >
+            🏠
+          </button>
+          <button 
+            className={`tab-btn ${activeTab === 'stats' ? 'active' : ''}`}
+            onClick={() => setActiveTab('stats')}
+          >
+            📊
+          </button>
+          <button 
+            className={`tab-btn ${activeTab === 'achievements' ? 'active' : ''}`}
+            onClick={() => setActiveTab('achievements')}
+          >
+            🏆
+          </button>
+        </div>
+          </>
+        )}
       </div>
 
       <p className="hint">◈ Stats decay every 30s — keep Clawbert alive! 💾</p>
