@@ -12,8 +12,8 @@ from pathlib import Path
 
 # Animation states and expected frame counts
 ANIMATION_STATES = {
-    "idle": 4,
-    "happy": 4,
+    "idle": 12,
+    "happy": 6,
     "eating": 5,
     "sleeping": 2,
     "sad": 3,

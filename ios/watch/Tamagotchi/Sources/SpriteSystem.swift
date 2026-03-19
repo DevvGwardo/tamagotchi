@@ -12,49 +12,50 @@ struct SpriteAnimation {
     
     static let idle = SpriteAnimation(
         name: "idle",
-        frames: ["cat_idle_1", "cat_idle_2", "cat_idle_3", "cat_idle_2"],
-        frameDuration: 0.3,
+        frames: ["cat_idle_1", "cat_idle_2", "cat_idle_3", "cat_idle_4", "cat_idle_5", "cat_idle_6", 
+                 "cat_idle_7", "cat_idle_8", "cat_idle_9", "cat_idle_10", "cat_idle_11", "cat_idle_12"],
+        frameDuration: 0.15,
         loops: true
     )
     
     static let happy = SpriteAnimation(
         name: "happy",
-        frames: ["cat_happy_1", "cat_happy_2", "cat_happy_1", "cat_happy_3"],
-        frameDuration: 0.15,
+        frames: ["cat_happy_1", "cat_happy_2", "cat_happy_3", "cat_happy_4", "cat_happy_5", "cat_happy_6"],
+        frameDuration: 0.12,
         loops: true
     )
     
     static let eating = SpriteAnimation(
         name: "eating",
-        frames: ["cat_eat_1", "cat_eat_2", "cat_eat_3", "cat_eat_2", "cat_eat_1"],
-        frameDuration: 0.12,
+        frames: ["cat_eating_1", "cat_eating_2", "cat_eating_3", "cat_eating_4", "cat_eating_5"],
+        frameDuration: 0.15,
         loops: false
     )
     
     static let sleeping = SpriteAnimation(
         name: "sleeping",
-        frames: ["cat_sleep_1", "cat_sleep_2"],
+        frames: ["cat_sleeping_1", "cat_sleeping_2"],
         frameDuration: 0.8,
         loops: true
     )
     
     static let sad = SpriteAnimation(
         name: "sad",
-        frames: ["cat_sad_1", "cat_sad_2", "cat_sad_1"],
+        frames: ["cat_sad_1", "cat_sad_2", "cat_sad_3"],
         frameDuration: 0.5,
         loops: true
     )
     
     static let dead = SpriteAnimation(
         name: "dead",
-        frames: ["cat_dead"],
+        frames: ["cat_dead_1"],
         frameDuration: 1.0,
         loops: false
     )
     
     static let bounce = SpriteAnimation(
         name: "bounce",
-        frames: ["cat_bounce_1", "cat_bounce_2", "cat_bounce_3", "cat_bounce_2", "cat_bounce_1"],
+        frames: ["cat_bounce_1", "cat_bounce_2", "cat_bounce_3", "cat_bounce_4", "cat_bounce_5"],
         frameDuration: 0.08,
         loops: false
     )
