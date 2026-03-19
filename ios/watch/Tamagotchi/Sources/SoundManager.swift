@@ -34,16 +34,18 @@ class SoundManager {
     }
     
     /// Play action-specific feedback
-    func playAction(_ action: WatchPetAction) {
+    func playAction(_ action: String) {
         switch action {
-        case .feed:
+        case "feed":
             WKInterfaceDevice.current().play(.click)
-        case .play:
+        case "play":
             WKInterfaceDevice.current().play(.success)
-        case .sleep:
+        case "sleep":
             WKInterfaceDevice.current().play(.directionDown)
-        case .pet:
+        case "pet":
             WKInterfaceDevice.current().play(.success)
+        default:
+            break
         }
     }
 }
