@@ -1,10 +1,10 @@
 /**
- * OpenClaw Tamagotchi — OpenClaw Integration Types
- * Types for OpenClaw-to-Tamagotchi communication
+ * Hermes Agent Tamagotchi — Hermes Agent Integration Types
+ * Types for Hermes Agent-to-Tamagotchi communication
  */
 
-/** Commands that OpenClaw can send to the Tamagotchi */
-export type OpenClawCommand =
+/** Commands that Hermes Agent can send to the Tamagotchi */
+export type HermesCommand =
   | 'feed'      // Feed the pet
   | 'play'      // Play with the pet
   | 'pet'       // Pet/give attention
@@ -13,8 +13,8 @@ export type OpenClawCommand =
   | 'achievements' // Get unlocked achievements
   | 'customize';   // Access customization options
 
-/** Events that the Tamagotchi can report to OpenClaw */
-export type OpenClawEvent =
+/** Events that the Tamagotchi can report to Hermes Agent */
+export type HermesEvent =
   | 'startup'          // Tamagotchi started/restarted
   | 'taskComplete'     // An action completed successfully
   | 'error'            // Something went wrong

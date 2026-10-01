@@ -35,7 +35,7 @@ export function StatsChart({ pet, history }: StatsChartProps) {
       }).length;
       
       // Get stored daily averages or estimate
-      const stored = localStorage.getItem(`clawbert_daily_${dayKey}`);
+      const stored = localStorage.getItem(`hermes_daily_${dayKey}`);
       let avgHunger = 50, avgHappiness = 50, avgHealth = 50;
       
       if (stored) {
@@ -69,7 +69,7 @@ export function StatsChart({ pet, history }: StatsChartProps) {
     
     // Store today's stats for future reference
     const today = new Date().toISOString().split('T')[0];
-    localStorage.setItem(`clawbert_daily_${today}`, JSON.stringify({
+    localStorage.setItem(`hermes_daily_${today}`, JSON.stringify({
       hunger: pet.hunger,
       happiness: pet.happiness,
       health: pet.health,

@@ -2,25 +2,35 @@ import SwiftUI
 
 @main
 struct Tamagotchi_iOSApp: App {
+    @StateObject private var syncManager = iOSStateSyncManager.shared
+
     var body: some Scene {
         WindowGroup {
             iOSCompanionView()
+                .environmentObject(syncManager)
         }
     }
 }
 
 struct iOSCompanionView: View {
-    @State private var pet = PetState.initial
+    @EnvironmentObject var syncManager: iOSStateSyncManager
     @State private var history: [HistoryEntry] = []
     @State private var actionMessage = ""
     @State private var animating = false
     @State private var isEditingName = false
     @State private var nameInput = ""
 
+    private var pet: PetState { syncManager.petState }
+
     var body: some View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: 16) {
+                    // Sync indicator
+                    SyncIndicatorView(syncStatus: syncManager.syncStatus) {
+                        syncManager.forceRefresh()
+                    }
+
                     // Character
                     PetCharacterView(mood: pet.mood, animating: animating)
                         .frame(height: 120)
@@ -106,7 +116,6 @@ struct iOSCompanionView: View {
                 .padding()
             }
             .navigationTitle("🐾 Tamagotchi")
-            .onAppear { loadPet() }
         }
     }
 
@@ -118,19 +127,14 @@ struct iOSCompanionView: View {
 
     private func saveName() {
         guard !nameInput.isEmpty else { return }
-        pet.name = nameInput
+        syncManager.updateName(nameInput)
         isEditingName = false
-        savePet()
     }
 
     private func performAction(_ action: PetAction) {
-        let delta = action.delta
         withAnimation(.spring(response: 0.3)) {
-            pet.hunger    = min(100, max(0, pet.hunger    + delta.hunger))
-            pet.happiness = min(100, max(0, pet.happiness + delta.happiness))
-            pet.energy    = min(100, max(0, pet.energy    + delta.energy))
-            pet.xp        = pet.xp + delta.xp
-            pet.mood      = deriveMood(pet)
+            syncManager.performAction(action)
+            syncManager.petState.mood = deriveMood(syncManager.petState)
             animating = true
         }
         actionMessage = "\(action.emoji) \(action.rawValue)!"
@@ -139,7 +143,6 @@ struct iOSCompanionView: View {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
             actionMessage = ""; animating = false
         }
-        savePet()
     }
 
     private func deriveMood(_ s: PetState) -> String {
@@ -154,19 +157,38 @@ struct iOSCompanionView: View {
     }
 
     private var deathCount: Int {
-        UserDefaults.standard.integer(forKey: "clawbert_deaths")
+        UserDefaults.standard.integer(forKey: "hermes_deaths")
     }
+}
 
-    private func savePet() {
-        if let data = try? JSONEncoder().encode(pet) {
-            UserDefaults.standard.set(data, forKey: "clawbert_pet")
+// MARK: - Sync Indicator (iOS)
+
+struct SyncIndicatorView: View {
+    let syncStatus: SyncStatus
+    let onRefresh: () -> Void
+
+    var body: some View {
+        HStack(spacing: 4) {
+            Circle()
+                .fill(statusColor)
+                .frame(width: 6, height: 6)
+            Text(syncStatus.displayText)
+                .font(.caption2)
+                .foregroundColor(.secondary)
+            Button(action: onRefresh) {
+                Image(systemName: "arrow.clockwise")
+                    .font(.caption2)
+            }
+            .buttonStyle(.plain)
         }
     }
 
-    private func loadPet() {
-        if let data = UserDefaults.standard.data(forKey: "clawbert_pet"),
-           let saved = try? JSONDecoder().decode(PetState.self, from: data) {
-            pet = saved
+    private var statusColor: Color {
+        switch syncStatus {
+        case .syncing: return .yellow
+        case .synced:  return .green
+        case .offline: return .gray
+        case .error:   return .red
         }
     }
 }
@@ -245,4 +267,5 @@ struct HistoryEntry: Identifiable {
 
 #Preview {
     iOSCompanionView()
+        .environmentObject(iOSStateSyncManager.shared)
 }
