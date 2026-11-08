@@ -1,6 +1,6 @@
 # Sprite Asset Pipeline
 
-> For OpenClaw integration docs, see [OPENCLAW.md](./OPENCLAW.md).
+> For Hermes Agent integration docs, see [HERMES.md](./HERMES.md).
 
 ## Overview
 

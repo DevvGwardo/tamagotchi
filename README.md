@@ -1,8 +1,8 @@
-# 🐾 OpenClaw Tamagotchi
+# 🐾 Hermes Agent Tamagotchi
 
 > A living, breathing Tamagotchi companion for your AI assistant — on your wrist.
 
-Your OpenClaw AI gets a little best friend. A pixel-art creature that lives on your Apple Watch and web dashboard, reacts to activity, gets hungry, sleepy, and happy — and needs you (and your AI) to take care of it.
+Your Hermes Agent AI gets a little best friend. A pixel-art creature that lives on your Apple Watch and web dashboard, reacts to activity, gets hungry, sleepy, and happy — and needs you (and your AI) to take care of it.
 
 ---
 
@@ -10,9 +10,9 @@ Your OpenClaw AI gets a little best friend. A pixel-art creature that lives on y
 
 ### 🎮 Core Gameplay
 - **5 Core Stats** — Hunger, Happiness, Energy, Health, and XP
-- **Dynamic Moods** — Clawbert's mood changes based on his stats (ecstatic → happy → content → neutral → sad → miserable)
+- **Dynamic Moods** — Hermes's mood changes based on his stats (ecstatic → happy → content → neutral → sad → miserable)
 - **Stat Decay** — Stats decrease over time, requiring regular care
-- **Death & Revival** — Let Clawbert's health hit zero and he'll die (but you can revive him!)
+- **Death & Revival** — Let Hermes's health hit zero and he'll die (but you can revive him!)
 
 ### 🏆 Achievements System
 - **15 Unlockable Achievements** including:
@@ -27,7 +27,7 @@ Your OpenClaw AI gets a little best friend. A pixel-art creature that lives on y
 ### 📊 Stats & Analytics
 - **Weekly Stats Chart** — View historical trends for all stats
 - **Care Streak Tracking** — Daily streak counter with flame emoji (🔥)
-- **Death Counter** — Tracks how many times Clawbert has died
+- **Death Counter** — Tracks how many times Hermes has died
 - **Lifetime Stats** — Total XP, best streak, and more
 
 ### 🎨 Character Customization
@@ -46,9 +46,9 @@ Your OpenClaw AI gets a little best friend. A pixel-art creature that lives on y
 - Critical warning beeps
 - Mute toggle
 
-### 💬 OpenClaw Integration
-- **Chat Commands** — `/clawbert status`, `/clawbert feed`, `/clawbert play`, etc.
-- **Auto-Reactions** — Clawbert greets you, checks in during heartbeats, sympathizes with errors
+### 💬 Hermes Agent Integration
+- **Chat Commands** — `/hermes status`, `/hermes feed`, `/hermes play`, etc.
+- **Auto-Reactions** — Hermes greets you, checks in during heartbeats, sympathizes with errors
 - **Bidirectional Sync** — All platforms share the same state
 
 ---
@@ -76,12 +76,12 @@ Your OpenClaw AI gets a little best friend. A pixel-art creature that lives on y
 - [x] **T3.4** Historical stat charts (weekly overview)
 - [x] **T3.5** Character customization (colors, accessories)
 
-### 🟢 Priority 4 — OpenClaw Integration
-- [x] **T4.1** ✅ OpenClaw skill reads pet stats from localStorage/JSON store
-- [x] **T4.2** ✅ Agent affects pet stats — Your helpful conversations make Clawbert happy
-- [x] **T4.3** ✅ Pet reacts to OpenClaw events — Clawbert greets you on startup
-- [x] **T4.4** ✅ Pet "speaks" through OpenClaw — Status updates via your agent
-- [x] **T4.5** ✅ Sync state to shared JSON store — All apps share Clawbert's state
+### 🟢 Priority 4 — Hermes Agent Integration
+- [x] **T4.1** ✅ Hermes Agent skill reads pet stats from localStorage/JSON store
+- [x] **T4.2** ✅ Agent affects pet stats — Your helpful conversations make Hermes happy
+- [x] **T4.3** ✅ Pet reacts to Hermes Agent events — Hermes greets you on startup
+- [x] **T4.4** ✅ Pet "speaks" through Hermes Agent — Status updates via your agent
+- [x] **T4.5** ✅ Sync state to shared JSON store — All apps share Hermes's state
 
 ### 🔵 Priority 5 — Polish & Community
 - [x] **T5.1** Multiple character skins (seasonal, unlockable via XP milestones)
@@ -94,7 +94,7 @@ Your OpenClaw AI gets a little best friend. A pixel-art creature that lives on y
 
 ## 🧬 The Character
 
-> **Name:** Clawbert
+> **Name:** Hermes
 >
 > **Species:** A small, round, cat-like creature with digital/code motifs
 >
@@ -132,9 +132,9 @@ tamagotchi/
 │       │   └── StatsChart.tsx          # Weekly stats chart
 │       ├── App.tsx
 │       └── types.ts
-├── openclaw-skill/                # OpenClaw skill for /clawbert command
+├── hermes-skill/                  # Hermes Agent skill for /hermes command
 │   ├── SKILL.md                   # Skill documentation
-│   └── clawbert.ts                # Skill implementation
+│   └── hermes.ts                  # Skill implementation
 ├── shared/
 │   └── types.ts                   # Shared PetState, stats, decay schema
 ├── project.yml                    # XcodeGen config (both targets)
@@ -173,7 +173,7 @@ npm run dev
 ```
 
 The web dashboard includes:
-- Full pixel-art Clawbert with animations
+- Full pixel-art Hermes with animations
 - All 5 stats with real-time decay
 - Achievement panel (click "🏆 Achievements" button)
 - Weekly stats chart (click "📊 Stats" button)
@@ -202,61 +202,61 @@ Features on Apple Watch:
 
 ---
 
-## 💬 OpenClaw Integration
+## 💬 Hermes Agent Integration
 
-Your OpenClaw AI assistant can interact with Clawbert directly! This creates a two-way connection between your AI and your digital pet.
+Your Hermes Agent AI assistant can interact with Hermes directly! This creates a two-way connection between your AI and your digital pet.
 
-### What is OpenClaw?
+### What is Hermes Agent?
 
-[OpenClaw](https://github.com/openclaw/openclaw) is an AI assistant framework that runs locally on your machine. When integrated with Clawbert, your AI gains awareness of your pet's state and can help take care of him.
+[Hermes Agent](https://github.com/hermes/hermes) is an AI assistant framework that runs locally on your machine. When integrated with Hermes, your AI gains awareness of your pet's state and can help take care of him.
 
 ### Installation
 
-1. **Install the skill** in your OpenClaw skills directory:
+1. **Install the skill** in your Hermes Agent skills directory:
 
 ```bash
 # Create the skills directory if it doesn't exist
-mkdir -p ~/.openclaw/skills
+mkdir -p ~/.hermes/skills
 
-# Copy the Clawbert skill
-cp -r /path/to/tamagotchi/openclaw-skill ~/.openclaw/skills/clawbert
+# Copy the Hermes skill
+cp -r /path/to/tamagotchi/hermes-skill ~/.hermes/skills/hermes
 
 # Or symlink for development
-ln -s /path/to/tamagotchi/openclaw-skill ~/.openclaw/skills/clawbert
+ln -s /path/to/tamagotchi/hermes-skill ~/.hermes/skills/hermes
 ```
 
-2. **Restart OpenClaw** to load the skill:
+2. **Restart Hermes Agent** to load the skill:
 
 ```bash
-openclaw gateway restart
+hermes gateway restart
 ```
 
 3. **Verify installation**:
 
 ```bash
-openclaw skills list
-# Should show: clawbert
+hermes skills list
+# Should show: hermes
 ```
 
 ### Available Commands
 
-Use the `/clawbert` command in your OpenClaw chat:
+Use the `/hermes` command in your Hermes Agent chat:
 
 | Command | Description | Effect |
 |---------|-------------|--------|
-| `/clawbert status` | Check current stats and mood | — |
-| `/clawbert feed` | Give Clawbert a meal | Hunger +30 |
-| `/clawbert play` | Play a game together | Happiness +25, Energy −10 |
-| `/clawbert pet` | Show affection | Happiness +10 |
-| `/clawbert sleep` | Put Clawbert to bed | Energy +50 |
-| `/clawbert achievements` | View unlocked achievements | — |
-| `/clawbert help` | Show all commands | — |
+| `/hermes status` | Check current stats and mood | — |
+| `/hermes feed` | Give Hermes a meal | Hunger +30 |
+| `/hermes play` | Play a game together | Happiness +25, Energy −10 |
+| `/hermes pet` | Show affection | Happiness +10 |
+| `/hermes sleep` | Put Hermes to bed | Energy +50 |
+| `/hermes achievements` | View unlocked achievements | — |
+| `/hermes help` | Show all commands | — |
 
 **Example interactions:**
 
 ```
-You: /clawbert status
-OpenClaw: 😊 Clawbert is feeling happy!
+You: /hermes status
+Hermes Agent: 😊 Hermes is feeling happy!
           🍖 Hunger: 75/100
           😊 Happiness: 82/100
           ⚡ Energy: 60/100
@@ -267,12 +267,12 @@ OpenClaw: 😊 Clawbert is feeling happy!
 
 ### How State Sync Works
 
-Clawbert's state is shared across all platforms:
+Hermes's state is shared across all platforms:
 
 ```
 ┌─────────────┐     ┌─────────────┐     ┌─────────────┐
-│  OpenClaw   │◄───►│  JSON Store │◄───►│   Web App   │
-│  (/clawbert)│     │  (shared)   │     │  (Browser)  │
+│Hermes Agent │◄───►│  JSON Store │◄───►│   Web App   │
+│  (/hermes)  │     │  (shared)   │     │  (Browser)  │
 └─────────────┘     └──────┬──────┘     └─────────────┘
                            │
                     ┌──────┴──────┐
@@ -283,7 +283,7 @@ Clawbert's state is shared across all platforms:
 
 **State file location:**
 ```bash
-~/.openclaw/workspace/clawbert-state.json
+~/.hermes/workspace/hermes-state.json
 ```
 
 **Sync features:**
@@ -295,43 +295,43 @@ Clawbert's state is shared across all platforms:
 ### Testing Sync
 
 1. **Open the web app** at `http://localhost:5173`
-2. **Note Clawbert's hunger level**
-3. **In OpenClaw chat**, type: `/clawbert feed`
+2. **Note Hermes's hunger level**
+3. **In Hermes Agent chat**, type: `/hermes feed`
 4. **Refresh the web app** — hunger should increase by 30
 5. **Check the watch app** — stats should match
 
 ### Auto-Reactions
 
-Clawbert automatically reacts to OpenClaw events:
+Hermes automatically reacts to Hermes Agent events:
 
-- **On session start** — Greets you if it's been 8+ hours
-- **During heartbeats** — Periodic check-ins (10% chance every 30 min)
-- **On errors** — Offers sympathy and moral support
-- **When ignored** — Gets sad and asks for attention
+- **On session start** --- Greets you if it's been 8+ hours
+- **During heartbeats** --- Periodic check-ins (10% chance every 30 min)
+- **On errors** --- Offers sympathy and moral support
+- **When ignored** --- Gets sad and asks for attention
 
 ---
 
 ## 🏆 Achievements
 
-Clawbert has **15 achievements** to unlock:
+Hermes has **15 achievements** to unlock:
 
 | Achievement | Description | How to Unlock |
 |-------------|-------------|---------------|
-| 🍖 First Meal | Fed Clawbert for the first time | Use `/clawbert feed` |
-| 🎾 Playtime | Played with Clawbert | Use `/clawbert play` |
+| 🍖 First Meal | Fed Hermes for the first time | Use `/hermes feed` |
+| 🎾 Playtime | Played with Hermes | Use `/hermes play` |
 | 💡 First Steps | Reached 100 XP | Earn XP from care actions |
-| 🌱 Growing Up | Reached 500 XP | Keep caring for Clawbert |
+| 🌱 Growing Up | Reached 500 XP | Keep caring for Hermes |
 | ⭐ Veteran Caretaker | Reached 1,000 XP | Long-term dedication |
 | ✨ Perfect Care | All stats above 80 | Maintain high stats |
-| 🏥 Survivor | Recovered from critical health | Save Clawbert from low health |
+| 🏥 Survivor | Recovered from critical health | Save Hermes from low health |
 | 🔥 Getting Serious | 3-day care streak | Interact daily for 3 days |
 | 🔥 Streak Master | 7-day care streak | Interact daily for a week |
 | 👑 Dedicated | 30-day care streak | Interact daily for a month |
-| 🤚 Best Friends | Petted Clawbert 50 times | Use `/clawbert pet` often |
-| 👨‍🍳 Chef | Fed Clawbert 100 times | Keep him well-fed |
+| 🤚 Best Friends | Petted Hermes 50 times | Use `/hermes pet` often |
+| 👨‍🍳 Chef | Fed Hermes 100 times | Keep him well-fed |
 | 🌙 Night Owl | Interacted after midnight | Late-night care |
 | 🌅 Early Bird | Interacted before 6am | Early morning care |
-| 💎 Immortal | Never let Clawbert die for a week | Perfect care for 7 days |
+| 💎 Immortal | Never let Hermes die for a week | Perfect care for 7 days |
 
 Achievements unlock XP rewards and are displayed in the Achievements panel.
 
@@ -339,7 +339,7 @@ Achievements unlock XP rewards and are displayed in the Achievements panel.
 
 ## 🎨 Character Skins
 
-Unlock new looks for Clawbert by earning XP:
+Unlock new looks for Hermes by earning XP:
 
 | Skin | Theme | Unlock Requirement |
 |------|-------|-------------------|
@@ -370,7 +370,7 @@ We welcome contributions! Here's how to get started:
 
 - **Web app**: Uses React + Vite. Run `npm run dev` for hot reload
 - **iOS/watchOS**: Uses SwiftUI. Use Xcode for debugging
-- **OpenClaw skill**: TypeScript. Test with `openclaw gateway logs`
+- **Hermes Agent skill**: TypeScript. Test with `hermes gateway logs`
 
 ### Project Ideas
 
@@ -387,13 +387,13 @@ We welcome contributions! Here's how to get started:
 
 MIT License — see [LICENSE](LICENSE) for details.
 
-*OpenClaw Tamagotchi is not affiliated with Bandai or Nintendo. Tamagotchi is a trademark of Bandai.*
+*Hermes Agent Tamagotchi is not affiliated with Bandai or Nintendo. Tamagotchi is a trademark of Bandai.*
 
 ---
 
 ## 🙏 Credits
 
 - Created by [DevvGwardo](https://github.com/DevvGwardo)
-- Built for [OpenClaw](https://github.com/openclaw/openclaw)
+- Built for [Hermes Agent](https://github.com/hermes/hermes)
 - Pixel art inspired by classic 8-bit games
 - Sound effects generated with Web Audio API

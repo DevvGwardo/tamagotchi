@@ -1,6 +1,6 @@
 name: Tamagotchi
 options:
-  bundleIdPrefix: com.openclaw
+  bundleIdPrefix: com.hermes-agent
   deploymentTarget:
     iOS: "16.0"
     watchOS: "26.2"
@@ -24,13 +24,14 @@ targets:
     type: application
     platform: iOS
     sources:
+      - path: Shared
       - path: iOS/Tamagotchi/Sources
     resources:
       - path: iOS/Tamagotchi/Resources
     settings:
       base:
         INFOPLIST_FILE: iOS/Tamagotchi/Resources/Info.plist
-        PRODUCT_BUNDLE_IDENTIFIER: com.openclaw.tamagotchi
+        PRODUCT_BUNDLE_IDENTIFIER: com.hermes-agent.tamagotchi
         TARGETED_DEVICE_FAMILY: "1,2"
         SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD: YES
         GENERATE_INFOPLIST_FILE: NO
@@ -44,6 +45,7 @@ targets:
     type: application
     platform: watchOS
     sources:
+      - path: Shared
       - path: watch/Tamagotchi/Sources
       - path: watch/Tamagotchi/Resources/Assets.xcassets
         buildPhase: resources
@@ -53,7 +55,7 @@ targets:
     settings:
       base:
         INFOPLIST_FILE: watch/Tamagotchi/Resources/Info.plist
-        PRODUCT_BUNDLE_IDENTIFIER: com.openclaw.tamagotchi.watchkitapp
+        PRODUCT_BUNDLE_IDENTIFIER: com.hermes-agent.tamagotchi.watchkitapp
         WATCHOS_DEPLOYMENT_TARGET: "26.2"
         SDKROOT: watchos
         TARGETED_DEVICE_FAMILY: 4

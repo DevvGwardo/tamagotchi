@@ -10,8 +10,8 @@ interface Achievement {
 }
 
 const ACHIEVEMENTS: Achievement[] = [
-  { id: 'first_feed', name: 'First Meal', description: 'Fed Clawbert for the first time', emoji: '🍖', xpReward: 10 },
-  { id: 'first_play', name: 'Playtime', description: 'Played with Clawbert for the first time', emoji: '🎾', xpReward: 10 },
+  { id: 'first_feed', name: 'First Meal', description: 'Fed Hermes for the first time', emoji: '🍖', xpReward: 10 },
+  { id: 'first_play', name: 'Playtime', description: 'Played with Hermes for the first time', emoji: '🎾', xpReward: 10 },
   { id: 'xp_100', name: 'First Steps', description: 'Reached 100 XP', emoji: '💡', xpReward: 25 },
   { id: 'xp_500', name: 'Growing Up', description: 'Reached 500 XP', emoji: '🌱', xpReward: 50 },
   { id: 'xp_1000', name: 'Veteran Caretaker', description: 'Reached 1,000 XP', emoji: '⭐', xpReward: 100 },
@@ -20,11 +20,11 @@ const ACHIEVEMENTS: Achievement[] = [
   { id: 'streak_3', name: 'Getting Serious', description: '3-day care streak', emoji: '🔥', xpReward: 25 },
   { id: 'streak_7', name: 'Streak Master', description: '7-day care streak', emoji: '🔥', xpReward: 75 },
   { id: 'streak_30', name: 'Dedicated', description: '30-day care streak', emoji: '👑', xpReward: 250 },
-  { id: 'pet_50', name: 'Best Friends', description: 'Petted Clawbert 50 times', emoji: '🤚', xpReward: 50 },
-  { id: 'feed_100', name: 'Chef', description: 'Fed Clawbert 100 times', emoji: '👨‍🍳', xpReward: 75 },
+  { id: 'pet_50', name: 'Best Friends', description: 'Petted Hermes 50 times', emoji: '🤚', xpReward: 50 },
+  { id: 'feed_100', name: 'Chef', description: 'Fed Hermes 100 times', emoji: '👨‍🍳', xpReward: 75 },
   { id: 'night_owl', name: 'Night Owl', description: 'Interacted after midnight', emoji: '🌙', xpReward: 15 },
   { id: 'early_bird', name: 'Early Bird', description: 'Interacted before 6am', emoji: '🌅', xpReward: 15 },
-  { id: 'immortal', name: 'Immortal', description: 'Never let Clawbert die for a week', emoji: '💎', xpReward: 200 },
+  { id: 'immortal', name: 'Immortal', description: 'Never let Hermes die for a week', emoji: '💎', xpReward: 200 },
 ];
 
 interface AchievementsPanelProps {
@@ -39,7 +39,7 @@ export function AchievementsPanel({ pet, deaths }: AchievementsPanelProps) {
 
   useEffect(() => {
     // Load unlocked achievements from localStorage
-    const saved = localStorage.getItem('clawbert_achievements');
+    const saved = localStorage.getItem('hermes_achievements');
     if (saved) {
       setUnlockedIds(JSON.parse(saved));
     }
@@ -62,7 +62,7 @@ export function AchievementsPanel({ pet, deaths }: AchievementsPanelProps) {
     if (newlyUnlocked.length > 0) {
       const updated = [...unlockedIds, ...newlyUnlocked];
       setUnlockedIds(updated);
-      localStorage.setItem('clawbert_achievements', JSON.stringify(updated));
+      localStorage.setItem('hermes_achievements', JSON.stringify(updated));
       setNewUnlock(newlyUnlocked[0]);
       
       // Clear notification after 3 seconds

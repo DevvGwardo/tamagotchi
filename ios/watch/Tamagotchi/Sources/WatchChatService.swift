@@ -18,7 +18,7 @@ struct ChatMessage: Codable, Identifiable {
 
 // MARK: - Watch Chat Service
 
-/// HTTP client for OpenClaw Gateway chat completions
+/// HTTP client for Hermes Gateway chat completions
 actor WatchChatService {
     static let shared = WatchChatService()
 
@@ -73,7 +73,7 @@ actor WatchChatService {
         // System message
         messages.append([
             "role": "system",
-            "content": "You are Clawbert, a friendly AI cat assistant on the user's Apple Watch. Keep responses very short (1-2 sentences) since this is a small screen."
+            "content": "You are Hermes, a friendly AI assistant on the user's Apple Watch. Keep responses very short (1-2 sentences) since this is a small screen."
         ])
 
         // Recent history

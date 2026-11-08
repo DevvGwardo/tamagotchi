@@ -136,8 +136,7 @@ class SpriteAnimator: ObservableObject {
               frameIndex < animation.frames.count else { return }
         currentFrame = animation.frames[frameIndex]
         
-        // Play synced sound/haptic
-        soundManager.play(for: animation.name, frame: frameIndex)
+        // Haptics are handled by action triggers, not per-frame
     }
 }
 

@@ -1,8 +1,8 @@
 /**
- * Clawbert OpenClaw Skill
- * 
- * Provides the /clawbert command for interacting with your Tamagotchi pet.
- * Syncs state with the shared JSON store at ~/.openclaw/workspace/clawbert-state.json
+ * Hermes Skill
+ *
+ * Provides the /hermes command for interacting with your Tamagotchi pet.
+ * Syncs state with the shared JSON store at ~/.hermes/workspace/hermes-state.json
  */
 
 import * as fs from 'fs';
@@ -48,11 +48,11 @@ interface Achievement {
 
 // ── Constants ────────────────────────────────────────────────────────────────
 
-const STATE_PATH = path.join(homedir(), '.openclaw', 'workspace', 'clawbert-state.json');
+const STATE_PATH = path.join(homedir(), '.hermes', 'workspace', 'hermes-state.json');
 
 const ACHIEVEMENTS: Achievement[] = [
-  { id: 'first_feed', name: 'First Meal', description: 'Fed Clawbert for the first time', emoji: '🍖', condition: (s) => s.xp >= 5 },
-  { id: 'first_play', name: 'Playtime', description: 'Played with Clawbert for the first time', emoji: '🎾', condition: (s) => s.xp >= 10 },
+  { id: 'first_feed', name: 'First Meal', description: 'Fed Hermes for the first time', emoji: '🍖', condition: (s) => s.xp >= 5 },
+  { id: 'first_play', name: 'Playtime', description: 'Played with Hermes for the first time', emoji: '🎾', condition: (s) => s.xp >= 10 },
   { id: 'xp_100', name: 'First Steps', description: 'Reached 100 XP', emoji: '💡', condition: (s) => s.xp >= 100 },
   { id: 'xp_500', name: 'Growing Up', description: 'Reached 500 XP', emoji: '🌱', condition: (s) => s.xp >= 500 },
   { id: 'xp_1000', name: 'Veteran Caretaker', description: 'Reached 1,000 XP', emoji: '⭐', condition: (s) => s.xp >= 1000 },
@@ -61,11 +61,11 @@ const ACHIEVEMENTS: Achievement[] = [
   { id: 'streak_3', name: 'Getting Serious', description: '3-day care streak', emoji: '🔥', condition: (s) => s.perfectDayStreak >= 3 },
   { id: 'streak_7', name: 'Streak Master', description: '7-day care streak', emoji: '🔥', condition: (s) => s.perfectDayStreak >= 7 },
   { id: 'streak_30', name: 'Dedicated', description: '30-day care streak', emoji: '👑', condition: (s) => s.perfectDayStreak >= 30 },
-  { id: 'pet_50', name: 'Best Friends', description: 'Petted Clawbert 50 times', emoji: '🤚', condition: () => false }, // Tracked separately
-  { id: 'feed_100', name: 'Chef', description: 'Fed Clawbert 100 times', emoji: '👨‍🍳', condition: () => false }, // Tracked separately
+  { id: 'pet_50', name: 'Best Friends', description: 'Petted Hermes 50 times', emoji: '🤚', condition: () => false }, // Tracked separately
+  { id: 'feed_100', name: 'Chef', description: 'Fed Hermes 100 times', emoji: '👨‍🍳', condition: () => false }, // Tracked separately
   { id: 'night_owl', name: 'Night Owl', description: 'Interacted after midnight', emoji: '🌙', condition: () => false },
   { id: 'early_bird', name: 'Early Bird', description: 'Interacted before 6am', emoji: '🌅', condition: () => false },
-  { id: 'immortal', name: 'Immortal', description: 'Never let Clawbert die', emoji: '💎', condition: (s) => s.timeTogetherMinutes > 10080 }, // 1 week
+  { id: 'immortal', name: 'Immortal', description: 'Never let Hermes die', emoji: '💎', condition: (s) => s.timeTogetherMinutes > 10080 }, // 1 week
 ];
 
 // ── State Management ─────────────────────────────────────────────────────────
@@ -79,7 +79,7 @@ function loadState(): PetState {
       return applyDecay(state);
     }
   } catch (err) {
-    console.error('[Clawbert] Failed to load state:', err);
+    console.error('[Hermes] Failed to load state:', err);
   }
   return createInitialState();
 }
@@ -92,14 +92,14 @@ function saveState(state: PetState): void {
     }
     fs.writeFileSync(STATE_PATH, JSON.stringify(state, null, 2));
   } catch (err) {
-    console.error('[Clawbert] Failed to save state:', err);
+    console.error('[Hermes] Failed to save state:', err);
   }
 }
 
 function createInitialState(): PetState {
   const now = new Date().toISOString();
   return {
-    name: 'Clawbert',
+    name: 'Hermes',
     hunger: 80,
     happiness: 80,
     energy: 100,
@@ -203,7 +203,7 @@ function getStatusMessage(state: PetState): string {
   };
   
   const isCritical = state.hunger < 20 || state.health < 20;
-  const warning = isCritical ? '\n⚠️ **CRITICAL:** Clawbert needs immediate attention!' : '';
+  const warning = isCritical ? '\n⚠️ **CRITICAL:** Hermes needs immediate attention!' : '';
   
   const timeSince = (isoDate: string) => {
     const mins = Math.floor((Date.now() - new Date(isoDate).getTime()) / 60000);
@@ -325,7 +325,7 @@ function getAchievements(state: PetState): string {
 
 // ── Main Handler ─────────────────────────────────────────────────────────────
 
-export function handleClawbertCommand(args: string[]): string {
+export function handleHermesCommand(args: string[]): string {
   const command = args[0]?.toLowerCase() || 'status';
   
   switch (command) {
@@ -349,21 +349,21 @@ export function handleClawbertCommand(args: string[]): string {
       
     case 'help':
       return `
-🐾 **Clawbert Commands**
+🐾 **Hermes Commands**
 
-/clawbert status       — Check stats and mood
-/clawbert feed         — Give a meal (+30 hunger)
-/clawbert play         — Play together (+25 happiness)
-/clawbert pet          — Show affection (+10 happiness)
-/clawbert sleep        — Put to bed (+50 energy)
-/clawbert achievements — View unlocked achievements
-/clawbert help         — Show this message
+/hermes status       — Check stats and mood
+/hermes feed         — Give a meal (+30 hunger)
+/hermes play         — Play together (+25 happiness)
+/hermes pet          — Show affection (+10 happiness)
+/hermes sleep        — Put to bed (+50 energy)
+/hermes achievements — View unlocked achievements
+/hermes help         — Show this message
 
-Stats decay every 30 seconds — keep Clawbert happy!
+Stats decay every 30 seconds — keep Hermes happy!
       `.trim();
       
     default:
-      return `❓ Unknown command: "${command}". Try /clawbert help`;
+      return `❓ Unknown command: "${command}". Try /hermes help`;
   }
 }
 
@@ -376,10 +376,10 @@ export function onHeartbeat(): string | null {
   // Only react if it's been a while and randomly
   if (minsSinceLastSeen > 30 && Math.random() < 0.1) {
     if (state.hunger < 30) {
-      return `🐾 ${state.name} is feeling hungry... maybe use /clawbert feed?`;
+      return `🐾 ${state.name} is feeling hungry... maybe use /hermes feed?`;
     }
     if (state.happiness < 30) {
-      return `🐾 ${state.name} seems lonely... want to /clawbert play?`;
+      return `🐾 ${state.name} seems lonely... want to /hermes play?`;
     }
   }
   

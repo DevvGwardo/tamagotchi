@@ -1,5 +1,5 @@
 /**
- * OpenClaw Tamagotchi — Shared Type Definitions
+ * Hermes Tamagotchi — Shared Type Definitions
  * Shared between iOS/watchOS app and web dashboard
  */
 
@@ -27,8 +27,8 @@ export interface PetState {
   skin: string;        // e.g. 'default', 'cyber', 'seasonal-xmas'
   createdAt: number;
 
-  // OpenClaw integration fields
-  openclawSync: {
+  // Hermes integration fields
+  hermesSync: {
     lastSyncTime: number;
     syncVersion: number;
   };

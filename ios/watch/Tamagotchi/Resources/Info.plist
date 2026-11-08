@@ -12,6 +12,6 @@
     <key>CFBundleVersion</key><string>$(CURRENT_PROJECT_VERSION)</string>
     <key>UILaunchStoryboardName</key><string>LaunchScreen</string>
     <key>WKApplication</key><true/>
-    <key>WKCompanionAppBundleIdentifier</key><string>com.openclaw.tamagotchi</string>
+    <key>WKCompanionAppBundleIdentifier</key><string>com.hermes-agent.tamagotchi</string>
 </dict>
 </plist>
